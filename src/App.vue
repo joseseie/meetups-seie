@@ -25,7 +25,8 @@
 
       </v-toolbar>
 
-      <v-navigation-drawer temporary v-model="sideNav">
+      <!--Blema de drawer nav for mobile, contornado com v-if-->
+      <v-navigation-drawer temporary v-model="sideNav" v-if="sideNav">
           <v-list>
               <v-list-tile
                       v-for="item in menuItems"
