@@ -10,11 +10,12 @@
         </v-layout>
         <v-layout row wrap class="mt-2">
             <v-flex xs12>
-                <v-carousel>
+                <v-carousel style="cursor: pointer">
                     <v-carousel-item
                             v-for="meetup in meetups"
                             :src="meetup.imageUrl"
-                            :key="meetup.id">
+                            :key="meetup.id"
+                            @click="onLoadMeetup(meetup.id)">
                         <div class="title">
                             {{  meetup.title }}
                         </div>
@@ -37,6 +38,11 @@
                     {imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/New_york_times_square-terabass.jpg/1200px-New_york_times_square-terabass.jpg',id: 'dssfsdfjkhfsdgfd', title: 'New York'},
                     {imageUrl: 'https://files.foreignaffairs.com/styles/large-crop-landscape/s3/taxonomy-images/region-france.jpg?itok=0LEfTGDA',id: 'kljljasljsd', title: 'Paris France'}
                 ]
+            }
+        },
+        methods: {
+            onLoadMeetup(id) {
+                this.$router.push('/meetups/' + id)
             }
         }
     }

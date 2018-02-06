@@ -67,3 +67,8 @@ export default {
   name: 'App'
 }
 </script>
+<style>
+    .container{
+        margin: 0;
+    }
+</style>
