@@ -32,12 +32,9 @@
 </template>
 <script>
     export default {
-        data () {
-            return {
-                meetups: [
-                    {imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/New_york_times_square-terabass.jpg/1200px-New_york_times_square-terabass.jpg',id: 'dssfsdfjkhfsdgfd', title: 'New York'},
-                    {imageUrl: 'https://files.foreignaffairs.com/styles/large-crop-landscape/s3/taxonomy-images/region-france.jpg?itok=0LEfTGDA',id: 'kljljasljsd', title: 'Paris France'}
-                ]
+        computed: {
+            meetups () {
+                return this.$store.getters.featuredMeetups
             }
         },
         methods: {
