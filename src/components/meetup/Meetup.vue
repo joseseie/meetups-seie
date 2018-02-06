@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-layout row wrap>
-            <v-flex xs12>
+            <v-flex xs12 sm10 offset-sm2>
                 <v-card>
                     <v-card-title>
                         <h6 class=primary--text> {{ meetup.title }} </h6>
