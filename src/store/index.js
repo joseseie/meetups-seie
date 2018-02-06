@@ -10,12 +10,16 @@ export const store = new Vuex.Store({
             {imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/New_york_times_square-terabass.jpg/1200px-New_york_times_square-terabass.jpg',
                 id: 'dssfsdfjkhfsdgfd',
                 title: 'New York',
-                date: '2017-07-17'
+                date: '2017-07-17',
+                location: 'New York',
+                description: 'It\'s good to bem here to work',
             },
             {imageUrl: 'https://files.foreignaffairs.com/styles/large-crop-landscape/s3/taxonomy-images/region-france.jpg?itok=0LEfTGDA',
                 id: 'kljljasljsd',
                 title: 'Paris France',
-                date: '2018-02-06'
+                date: '2018-02-06',
+                location: 'New York',
+                description: 'Come along for amazing things together...',
             }
         ],
         user: {
