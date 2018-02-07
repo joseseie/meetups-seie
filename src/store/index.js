@@ -8,6 +8,10 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 
     state: {
+        //Nodo ou tabelas
+        nodoMeetup: 'Meetups',
+
+        //Outros valores
         loadedMeetups: [
             {imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/New_york_times_square-terabass.jpg/1200px-New_york_times_square-terabass.jpg',
                 id: 'dssfsdfjkhfsdgfd',
@@ -49,9 +53,9 @@ export const store = new Vuex.Store({
         }
     },
     actions: {
-        loadMeetups ({commit}) {
+        loadMeetups ({state, commit}) {
             commit('setLoading',true)
-            firebase.database().ref('Meetup').once('value')
+            firebase.database().ref(state.nodoMeetup).once('value')
                 .then((data) => {
                     const meetups = []
                     const obj = data.val()
@@ -73,7 +77,7 @@ export const store = new Vuex.Store({
                     commit('setLoading',false)
                 }))
         },
-        createMeetup ({commit, getters}, payload) {
+        createMeetup ({state, commit, getters}, payload) {
             const meetup = {
                 title:      payload.title,
                 location:   payload.location,
@@ -84,7 +88,7 @@ export const store = new Vuex.Store({
             }
         //    Gravar no firebase
 
-            firebase.database().ref('Meetups').push(meetup)
+            firebase.database().ref(state.nodoMeetup).push(meetup)
                 .then((data) => {
                     const key = data.key
                     console.log(data)
