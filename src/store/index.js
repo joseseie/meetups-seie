@@ -12,22 +12,7 @@ export const store = new Vuex.Store({
         nodoMeetup: 'Meetups',
 
         //Outros valores
-        loadedMeetups: [
-            {imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/New_york_times_square-terabass.jpg/1200px-New_york_times_square-terabass.jpg',
-                id: 'dssfsdfjkhfsdgfd',
-                title: 'New York',
-                date: new Date(),
-                location: 'New York',
-                description: 'It\'s good to bem here to work',
-            },
-            {imageUrl: 'https://files.foreignaffairs.com/styles/large-crop-landscape/s3/taxonomy-images/region-france.jpg?itok=0LEfTGDA',
-                id: 'kljljasljsd',
-                title: 'Paris France',
-                date: new Date(),
-                location: 'New York',
-                description: 'Come along for amazing things together...',
-            }
-        ],
+        loadedMeetups: [],
         user: null,
         loading: false,
         error: null
@@ -252,6 +237,30 @@ export const store = new Vuex.Store({
                 registeredMeetups: [],
                 fbKeys: {}
             })
+        },
+        fetchUserData({commit, getters}) {
+            commit('setLoading',true)
+            firebase.database().ref('/Users/' + getters.user.id + '/Registrations/').once('value')
+                .then(data => {
+                    const dataPairs = data.val()
+                    let registeredMeetups = []
+                    let swappedPairs = {}
+                    for (let key in dataPairs) {
+                        registeredMeetups.push(dataPairs[key])
+                        swappedPairs[dataPairs[key]] = key
+                    }
+                    const updatedUser = {
+                        id: getters.user.id,
+                        registeredMeetups: registeredMeetups,
+                        fbKeys: swappedPairs
+                    }
+                    commit('setLoading', false)
+                    commit('setUser', updatedUser)
+                })
+                .catch(error => {
+                    console.log(error)
+                    commit('setLoading', false)
+                })
         },
         logout ({commit}) {
             firebase.auth().signOut();
