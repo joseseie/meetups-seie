@@ -10,9 +10,13 @@ import { store } from "./store/index";
 import DateFilter from './filters/date'
 import AlterCmp from './components/shared/Alert.vue'
 import EditMeetupDetailDialog from './components/meetup/edit/EditMeetupDetailsDialog.vue'
+import EditMeetupDateDialog from './components/meetup/edit/EditMeetupDateDialog.vue'
+import EditMeetupTimeDialog from './components/meetup/edit/EditMeetupTimeDialog.vue'
 
 Vue.component('app-alert',AlterCmp)
 Vue.component('app-edit-meetup-datail-dialog',EditMeetupDetailDialog)
+Vue.component('app-edit-meetup-date-dialog',EditMeetupDateDialog)
+Vue.component('app-edit-meetup-time-dialog',EditMeetupTimeDialog)
 
 Vue.filter('date', DateFilter)
 
