@@ -2,7 +2,6 @@
   <v-app>
 
       <v-toolbar dark class="primary">
-
           <v-toolbar-side-icon
                   @click.native.stop="sideNav = true"
                   class="hidden-sm-and-up">
@@ -21,6 +20,11 @@
                   <v-icon left>{{ item.icon }} </v-icon>
                   {{ item.title }}
               </v-btn>
+              <!--Botao logOut-->
+              <v-btn flat @click="onLogout" v-if="userIsAuthenticated">
+                  <v-icon left>exit_to_app</v-icon>
+                  Logout
+              </v-btn>
           </v-toolbar-items>
 
       </v-toolbar>
@@ -37,6 +41,13 @@
                       <v-icon> {{ item.icon }} </v-icon>
                   </v-list-tile-action>
                   <v-list-tile-content> {{ item.title }} </v-list-tile-content>
+              </v-list-tile>
+              <!--Opcao de exit from app-->
+              <v-list-tile @click="onLogout" v-if="userIsAuthenticated">
+                  <v-list-tile-action>
+                      <v-icon>exit_to_app</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-content>Log out </v-list-tile-content>
               </v-list-tile>
           </v-list>
       </v-navigation-drawer>
@@ -76,7 +87,11 @@ export default {
             return this.$store.getters.user !== null && this.$store.getters.user !== undefined
         }
   },
-
+  methods: {
+      onLogout () {
+         this.$store.dispatch('logout')
+      }
+  },
   name: 'App'
 }
 </script>
