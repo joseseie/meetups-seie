@@ -63,6 +63,7 @@ export const store = new Vuex.Store({
                         meetups.push({
                             id: key,
                             title: obj[key].title,
+                            location: obj[key].location,
                             description: obj[key].description,
                             imageUrl: obj[key].imageUrl,
                             date: obj[key].date,
@@ -81,27 +82,38 @@ export const store = new Vuex.Store({
             const meetup = {
                 title:      payload.title,
                 location:   payload.location,
-                imageUrl:   payload.imageUrl,
                 description:payload.description,
                 date:       payload.date.toISOString(),
                 creatorId:  getters.user.id
             }
-        //    Gravar no firebase
-
+            let imageUrl
+            let key
             firebase.database().ref(state.nodoMeetup).push(meetup)
                 .then((data) => {
-                    const key = data.key
-                    console.log(data)
+                    key = data.key
+                    return key
+                })
+                .then( key => {
+                    const filename = payload.image.name
+                    const ext = filename.slice(filename.lastIndexOf('.'))
+                    return firebase.storage().ref(state.nodoMeetup + '/' + key + '.' + ext).put(payload.image)
+                })
+                .then(fileData => {
+                    imageUrl = fileData.metadata.downloadURLs[0]
+                    return firebase.database().ref(state.nodoMeetup).child(key).update({imageUrl: imageUrl})
+                })
+                .then(() => {
                     commit('createMeetup',{
                         ... meetup,
+                        imageUrl: imageUrl,
                         id: key
                     })
-                    router.push('/meetups')
                 })
                 .catch((error) => {
                     console.log(error)
                 })
 
+                router.push('/meetups')
         },
         signUserUp ({commit}, payload) {
             commit('setLoading',true)

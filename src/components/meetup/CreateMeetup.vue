@@ -30,12 +30,13 @@
                     </v-layout>
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm3>
-                            <v-text-field
-                                    name="imageUrl"
-                                    label="Image Url"
-                                    id="image-url"
-                                    v-model="imageUrl"
-                                    required></v-text-field>
+                            <v-btn raised class="primary" @click="onPickFile">Upload Image</v-btn>
+                            <input
+                                type="file"
+                                style="display: none"
+                                ref="fileInput"
+                                accept="image/*"
+                                @change="onFilePicked">
                         </v-flex>
                     </v-layout>
                     <v-layout row>
@@ -96,6 +97,7 @@
                 description: '',
                 date: null,
                 time: null,
+                image: null,
             }
         },
         computed: {
@@ -122,16 +124,34 @@
         },
         methods: {
             onCreateMeetup () {
-                if (!this.formIsValid) return
+                if (!this.formIsValid || !this.image)
+                    return
 
                 const meetupData = {
                     title:      this.title,
                     location:   this.location,
-                    imageUrl:   this.imageUrl,
+                    image:   this.image,
                     description:this.description,
                     date:       this.submittableDateTime,
                 }
                 this.$store.dispatch('createMeetup',meetupData)
+            },
+            onPickFile ()  {
+                this.$refs.fileInput.click()
+            },
+            onFilePicked (event) {
+                const files = event.target.files
+                let filename = files[0].name
+                if (filename.lastIndexOf('.') <= 0)
+                {
+                    return alert('Por favor adicione um ficheiro valido!')
+                }
+                const fileReader = new FileReader()
+                fileReader.addEventListener('load', () => {
+                    this.imageUrl = fileReader.result
+                })
+                fileReader.readAsDataURL(files[0])
+                this.image = files[0]
             }
         }
     }

@@ -9,8 +9,10 @@ import 'vuetify/dist/vuetify.min.css'
 import { store } from "./store/index";
 import DateFilter from './filters/date'
 import AlterCmp from './components/shared/Alert.vue'
+import EditMeetupDetailDialog from './components/meetup/edit/EditMeetupDetailsDialog.vue'
 
 Vue.component('app-alert',AlterCmp)
+Vue.component('app-edit-meetup-datail-dialog',EditMeetupDetailDialog)
 
 Vue.filter('date', DateFilter)
 
@@ -38,7 +40,7 @@ new Vue({
           authDomain: "seie-vuemeetup.firebaseapp.com",
           databaseURL: "https://seie-vuemeetup.firebaseio.com",
           projectId: "seie-vuemeetup",
-          storageBucket: "seie-vuemeetup.appspot.com",
+          storageBucket: "gs://seie-vuemeetup.appspot.com/",
       })
       firebase.auth().onAuthStateChanged((user) => {
           if (user) {
